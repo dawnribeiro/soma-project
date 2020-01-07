@@ -9,7 +9,7 @@ export default function ActiveCalls() {
       .get('https://dev.somahub.io/api/1/calls', {
         headers: {
           Authorization: 'Basic am9zaEBzb21hZ2xvYmFsLmNvbTpwYXNzd29yZA==',
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       })
       .then(resp => {
