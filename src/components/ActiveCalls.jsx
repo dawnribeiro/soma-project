@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Moment from 'react-moment'
 
 export default function ActiveCalls() {
-  const [calls, setCalls] = useState({})
+  const [calls, setCalls] = useState([])
+  const [callTypes, setCallTypes] = useState([])
 
   useEffect(() => {
     axios
-      .get('https://dev.somahub.io/api/1/calls', {
+      .get('/api/1/calls', {
         headers: {
           Authorization: 'Basic am9zaEBzb21hZ2xvYmFsLmNvbTpwYXNzd29yZA==',
           'Content-Type': 'application/json',
@@ -14,8 +16,47 @@ export default function ActiveCalls() {
       })
       .then(resp => {
         setCalls(resp.data)
-        console.log(resp.data)
+        console.log('calls', resp.data)
+        return axios.get('/api/1/callTypes').then(resp => {
+          setCallTypes(resp.data)
+          console.log('call types', resp.data)
+        })
       })
-  })
-  return <p>HELLO</p>
+  }, [])
+  return (
+    <section>
+      <div>
+        <ul className="list">
+          {calls.map(call => {
+            return (
+              <li key={call.Id} className="card">
+                <div>
+                  {callTypes
+                    .filter(callTypes.Key === call.CallType)
+                    .map(type => {
+                      return <p>{type.Name}</p>
+                    })}
+                  )}
+                  <p>
+                    {call.Location.AddNum} {call.Location.StPreDir}{' '}
+                    {call.Location.StName} {call.Location.StType}{' '}
+                    {call.Location.StDir}, {call.Location.City},{' '}
+                    {call.Location.Region}, {call.Location.Postal}
+                  </p>
+                </div>
+                <div>
+                  <p>{call.Status}</p>
+                  <Moment fromNow>{call.CreatedAt}</Moment>
+                </div>
+                <div>
+                  <p>#{call.CallNumber.slice(-4)}</p>
+                  <p>Priority: {call.Priority}</p>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </section>
+  )
 }
