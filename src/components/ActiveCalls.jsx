@@ -30,27 +30,28 @@ export default function ActiveCalls() {
           {calls.map(call => {
             return (
               <li key={call.Id} className="card">
-                <div>
-                  {callTypes
-                    .filter(callTypes.Key === call.CallType)
-                    .map(type => {
-                      return <p>{type.Name}</p>
-                    })}
-                  )}
-                  <p>
+                <div className="first">
+                  {/* {callTypes.map(type => {
+                    callTypes.filter(type.Key === call.CallType)
+                    return <p>{type.Name}</p>
+                  })} */}
+                  <p className="header">{call.CallType}</p>
+                  <p className="address">
                     {call.Location.AddNum} {call.Location.StPreDir}{' '}
                     {call.Location.StName} {call.Location.StType}{' '}
                     {call.Location.StDir}, {call.Location.City},{' '}
                     {call.Location.Region}, {call.Location.Postal}
                   </p>
                 </div>
-                <div>
-                  <p>{call.Status}</p>
-                  <Moment fromNow>{call.CreatedAt}</Moment>
-                </div>
-                <div>
-                  <p>#{call.CallNumber.slice(-4)}</p>
-                  <p>Priority: {call.Priority}</p>
+                <div className="bottom-group">
+                  <div className="second">
+                    <p>{call.Status}</p>
+                    <Moment fromNow>{call.CreatedAt}</Moment>
+                  </div>
+                  <div className="third">
+                    <p>#{call.CallNumber.slice(-4)}</p>
+                    <p>Priority: {call.Priority}</p>
+                  </div>
                 </div>
               </li>
             )
