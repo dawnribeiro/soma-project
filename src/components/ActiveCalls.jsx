@@ -35,7 +35,7 @@ export default function ActiveCalls() {
                     callTypes.filter(type.Key === call.CallType)
                     return <p>{type.Name}</p>
                   })} */}
-                  <p className="header">{call.CallType}</p>
+                  <p className="title">{call.CallType}</p>
                   <p className="address">
                     {call.Location.AddNum} {call.Location.StPreDir}{' '}
                     {call.Location.StName} {call.Location.StType}{' '}
