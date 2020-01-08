@@ -17,11 +17,11 @@ export default function ActiveCalls() {
       .then(resp => {
         setCalls(resp.data)
         console.log('calls', resp.data)
-        return axios.get('/api/1/callTypes').then(resp => {
-          setCallTypes(resp.data)
-          console.log('call types', resp.data)
-        })
       })
+    axios.get('/api/1/callTypes').then(resp => {
+      setCallTypes(resp.data)
+      console.log('call types', resp.data)
+    })
   }, [])
 
   return (
@@ -37,8 +37,10 @@ export default function ActiveCalls() {
               return (
                 <li key={call.Id} className="card">
                   <div className="first">
-                    <p>{callTypeResult ? callTypeResult.Name : 'Unknown'}</p>
-                    <p className="title">{call.CallType}</p>
+                    <p className="title">
+                      {callTypeResult ? callTypeResult.Name : 'Unknown'}
+                    </p>
+
                     <p className="address">
                       {call.Location.AddNum} {call.Location.StPreDir}{' '}
                       {call.Location.StName} {call.Location.StType}{' '}
