@@ -20,10 +20,6 @@ export default function ActiveCalls() {
         return axios.get('/api/1/callTypes').then(resp => {
           setCallTypes(resp.data)
           console.log('call types', resp.data)
-          let myCallType = callTypes.filter(
-            types => types.Key === calls.CallType
-          )
-          console.log(myCallType)
         })
       })
   }, [])
@@ -34,13 +30,14 @@ export default function ActiveCalls() {
         <ul className="list">
           {calls.map(call => {
             {
-              // let myCallType = callTypes.filter(
-              //   types => types.Key === call.CallType
-              // )
+              let myCallType = callTypes.filter(
+                types => types.Key === call.CallType
+              )
+              let callTypeResult = myCallType[0]
               return (
                 <li key={call.Id} className="card">
                   <div className="first">
-                    {/* <p>{myCallType[0].Name}</p> */}
+                    <p>{callTypeResult ? callTypeResult.Name : 'Unknown'}</p>
                     <p className="title">{call.CallType}</p>
                     <p className="address">
                       {call.Location.AddNum} {call.Location.StPreDir}{' '}
